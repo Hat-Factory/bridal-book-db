@@ -3,13 +3,12 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('users', table => {
       table.increments('id').primary();
-      table.string('first name');
-      table.string('last name');
-      table.string('s3/photo');
-      table.string('bride/bridesmaid');
-      table.timeStamps(true, true);
-    })
-  ]),
+      table.string('firstName');
+      table.string('lastName');
+      table.string('s3Photo');
+      table.string('brideBridesmaid');
+      table.timestamps(true, true);
+    }),
     knex.schema.createTable('users_weddings', table => {
       table.increments('id').primary();
       table.integer('user_id').references(users.id);
@@ -21,14 +20,16 @@ exports.up = function(knex, Promise) {
       table.string('weddingName');
       table.string('location');
       table.string('theme');
-      table.string('date/time');
-      table.timeStamps(true, true);
+      table.string('dateTime');
+      table.timestamps(true, true);
   }),
     knex.schema.createTable('tasks', table => {
       table.increments('id').primary();
-      table.string('task-name');
-      table.string('task-desc');
+      table.string('taskName');
+      table.string('taskDesc');
+      table.timestamps(true, true);
   })
+])
 };
 
 exports.down = function(knex, Promise) {

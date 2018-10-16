@@ -9,9 +9,9 @@ const database = require('knex')(configuration);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8081);
 
-app.post('/api/v1/users', (request, resposnse) => {
+app.post('/api/v1/users', (request, response) => {
   const user = request.body;
 
   database('users').insert(user, 'id')
@@ -58,11 +58,10 @@ app.get('/api/v1/users/:user_id', (request, response) => {
 });
 
 
-
 app.listen(app.get('port'), () => {
   console.log(`you are listening on port ${app.get('port')}`)
 })
 
 
-module.export = app ;
+module.exports = app ;
 

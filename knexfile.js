@@ -32,7 +32,12 @@ module.exports = {
 
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL + `?ssl=true`,
+    connection: {
+      host: 'bridalbook.c42nro32nklp.us-west-2.rds.amazonaws.com',
+      user:'alan',
+      password: 'W3lc0m31!',
+      database: 'bridalbook'
+    },
     migrations: {
       directory: './db/migrations'
     },
