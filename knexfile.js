@@ -4,7 +4,13 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/bridal_book_db',
+    connection: {
+      host: 'bridalbook.c42nro32nklp.us-west-2.rds.amazonaws.com',
+      user:'bridalbook',
+      password: 'W3lc0m31!',
+      database: 'hatFactory',
+      port: '5432'
+    },
     migrations: {
       directory: './db/migrations'
     },
@@ -33,10 +39,10 @@ module.exports = {
   production: {
     client: 'pg',
     connection: {
-      host: 'bridalbook.c42nro32nklp.us-west-2.rds.amazonaws.com',
-      user:'alan',
+      host: 'bridalbookv1.cluster-c42nro32nklp.us-west-2.rds.amazonaws.com',
+      user:'bridalbookdb',
       password: 'W3lc0m31!',
-      database: 'bridalbook'
+      database: 'bridalbookdb'
     },
     migrations: {
       directory: './db/migrations'
@@ -46,5 +52,4 @@ module.exports = {
     },
     useNullAsDefault: true
   }
-
 };
