@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-const environment = process.env.NODE_ENV || 'development';
+const environment = process.env.NODE_ENV || 'production';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
@@ -11,14 +11,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('port', process.env.PORT || 8081);
 
+app.get('/healthcheck', (request, response) => {
+  return response.status(200).json('ok')
+})
+
 app.post('/api/v1/users', (request, response) => {
   const user = request.body;
-
+  console.log('adding user', user)
   database('users').insert(user, 'id')
     .then(user => {
+      console.log(user)
       return response.status(201).json({id: user[0]})
     })
     .catch(error => {
+      console.log('error adding user', error)
       return response.status(500).json({error})
     })
 });
@@ -50,6 +56,7 @@ app.post('api/v1/tasks', (request, response) => {
 app.get('/api/v1/users/:user_id', (request, response) => {
   database('users').where('user_id', request.params.user_id).select()
     .then( user => {
+      console.log(user)
       return response.status(200).json(user)
     })
     .catch(error => {
@@ -57,11 +64,10 @@ app.get('/api/v1/users/:user_id', (request, response) => {
     });
 });
 
-
 app.listen(app.get('port'), () => {
+  console.log(process.env.NODE_ENV)
   console.log(`you are listening on port ${app.get('port')}`)
 })
-
 
 module.exports = app ;
 
